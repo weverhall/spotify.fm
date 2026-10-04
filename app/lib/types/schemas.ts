@@ -42,7 +42,7 @@ const SpotifyAlbumSchema = z.object({
   external_urls: z.object({ spotify: z.url() }),
 });
 
-const SpotifyTrackSchema = z.object({
+export const SpotifyTrackSchema = z.object({
   id: z.string().nullable(),
   name: z.string(),
   artists: z.array(SpotifyArtistSchema),

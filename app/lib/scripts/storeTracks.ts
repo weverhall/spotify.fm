@@ -1,5 +1,5 @@
 import { getTrendingTracks } from '../services/fetchTracks';
-import { getLatestSnapshot, saveSnapshot, isSameChart } from '../services/chartHistory';
+import { getLatestSnapshot, saveSnapshot, isSameChart } from '../services/snapshots';
 import { getTodayDate } from '../utils/datetime';
 import { disconnectMongo } from '../utils/mongo';
 

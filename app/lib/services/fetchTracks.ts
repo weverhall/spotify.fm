@@ -10,7 +10,7 @@ import {
 } from '../types/schemas';
 import { withRank } from '../utils/rank';
 import { env } from '../utils/config';
-import { getRecentSnapshots, calculateChartMovement } from './chartHistory';
+import { getRecentSnapshots, calculateChartMovement } from './snapshots';
 
 export type TrendingChart = {
   tracks: LastfmTracks;

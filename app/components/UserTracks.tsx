@@ -24,6 +24,7 @@ import styles from '../styles/my-tracks.module.css';
 type UserTracksProps = {
   tracksByTerm: TracksByTerm;
   profile: SpotifyProfile | null;
+  initialFavorites: SpotifyTrack[];
 };
 
 type TermOption = { label: string; value: SpotifyTerm };
@@ -112,9 +113,9 @@ const Header = ({ profile }: { profile: SpotifyProfile | null }) => {
   );
 };
 
-const UserTracks = ({ tracksByTerm, profile }: UserTracksProps) => {
+const UserTracks = ({ tracksByTerm, profile, initialFavorites }: UserTracksProps) => {
   const [term, setTerm] = useState<SpotifyTerm>('medium_term');
-  const [favorites, setFavorites] = useState<SpotifyTrack[]>([]);
+  const [favorites, setFavorites] = useState<SpotifyTrack[]>(initialFavorites);
   const { hostRef, play, isPlaying } = useSpotifyEmbed(tracksByTerm.medium_term[0]?.id ?? null);
 
   const tracks = tracksByTerm[term];
