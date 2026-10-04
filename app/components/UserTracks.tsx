@@ -1,12 +1,13 @@
 'use client';
 
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { DataScroller } from 'primereact/datascroller';
 import { TabView, TabPanel } from 'primereact/tabview';
 import { SelectButton } from 'primereact/selectbutton';
 import { Button } from 'primereact/button';
+import { Toast } from 'primereact/toast';
 import type {
   SpotifyTrack,
   SpotifyProfile,
@@ -17,6 +18,7 @@ import type {
 } from '../lib/types/schemas';
 import type { Ranked } from '../lib/utils/rank';
 import { useSpotifyEmbed } from '../lib/hooks/useSpotifyEmbed';
+import { addFavoriteAction, removeFavoriteAction } from '../lib/actions/favorites';
 import { PlayIcon, PauseIcon, ArrowUturnLeftIcon } from './ui/Icons';
 import RotatingWord from './ui/RotatingWord';
 import styles from '../styles/my-tracks.module.css';
@@ -116,16 +118,42 @@ const Header = ({ profile }: { profile: SpotifyProfile | null }) => {
 const UserTracks = ({ tracksByTerm, profile, initialFavorites }: UserTracksProps) => {
   const [term, setTerm] = useState<SpotifyTerm>('medium_term');
   const [favorites, setFavorites] = useState<SpotifyTrack[]>(initialFavorites);
+  const toastRef = useRef<Toast>(null);
   const { hostRef, play, isPlaying } = useSpotifyEmbed(tracksByTerm.medium_term[0]?.id ?? null);
 
   const tracks = tracksByTerm[term];
 
   const isFavorite = (id: string) => favorites.some((f) => f.id === id);
 
-  const toggleFavorite = (track: SpotifyTrack) =>
-    setFavorites((prev) =>
-      prev.some((f) => f.id === track.id) ? prev.filter((f) => f.id !== track.id) : [track, ...prev]
-    );
+  const showError = (summary: string) =>
+    toastRef.current?.show({
+      severity: 'error',
+      summary,
+      detail: 'Something went wrong.',
+      life: 3500,
+    });
+
+  const toggleFavorite = async (track: SpotifyTrack) => {
+    const { id } = track;
+    if (!id) return;
+
+    const wasFavorite = isFavorite(id);
+
+    const setFavorite = (favorite: boolean) =>
+      setFavorites((prev) => {
+        const without = prev.filter((f) => f.id !== id);
+        return favorite ? [track, ...without] : without;
+      });
+
+    setFavorite(!wasFavorite);
+
+    const result = wasFavorite ? await removeFavoriteAction(id) : await addFavoriteAction(track);
+    if (!result.ok) {
+      console.error('failed to update favorite:', result.error);
+      setFavorite(wasFavorite);
+      showError(wasFavorite ? "Couldn't remove favorite" : "Couldn't save favorite");
+    }
+  };
 
   const row = (track: SpotifyTrack, rank?: number) => {
     const { id } = track;
@@ -198,7 +226,7 @@ const UserTracks = ({ tracksByTerm, profile, initialFavorites }: UserTracksProps
               favorite ? `Remove ${track.name} from favorites` : `Add ${track.name} to favorites`
             }
             aria-pressed={favorite}
-            onClick={() => toggleFavorite(track)}
+            onClick={() => void toggleFavorite(track)}
           />
         )}
       </div>
@@ -207,6 +235,7 @@ const UserTracks = ({ tracksByTerm, profile, initialFavorites }: UserTracksProps
 
   return (
     <>
+      <Toast ref={toastRef} position="top-center" />
       <div className={styles.view}>
         <Header profile={profile} />
         <TabView>
@@ -246,11 +275,10 @@ const UserTracks = ({ tracksByTerm, profile, initialFavorites }: UserTracksProps
             }
           >
             {favorites.length === 0 ? (
-              <p className={styles.empty}>
-                No favorites yet.
-                <br />
-                Tap ♥ on a track to add it.
-              </p>
+              <div className={styles.empty}>
+                <p>No favorites yet.</p>
+                <p>Tap ♥ on a track to add it.</p>
+              </div>
             ) : (
               <DataScroller
                 value={favorites}

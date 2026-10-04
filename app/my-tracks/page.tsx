@@ -21,7 +21,7 @@ const MyTracksPage = async () => {
       return null;
     }),
     getUserTracksByTerm(session.access_token),
-    getFavoriteTracks(session.user_id).catch((err) => {
+    getFavoriteTracks(session.userId).catch((err) => {
       console.error('failed to load favorite tracks:', err);
       return [];
     }),

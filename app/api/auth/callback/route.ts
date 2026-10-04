@@ -23,7 +23,7 @@ export const GET = async (req: Request) => {
     const profile = await getUserProfile(token.access_token);
 
     const sessionID = generateSessionID();
-    await storeSession(sessionID, { ...token, user_id: profile.id });
+    await storeSession(sessionID, { ...token, userId: profile.id });
 
     const successResponse = NextResponse.redirect(`${env.BASE_URL}/my-tracks`);
     successResponse.cookies.set('session_id', sessionID, {
