@@ -129,7 +129,6 @@ const UserTracks = ({ tracksByTerm, profile, initialFavorites }: UserTracksProps
     toastRef.current?.show({
       severity: 'error',
       summary,
-      detail: 'Something went wrong.',
       life: 3500,
     });
 
@@ -147,10 +146,21 @@ const UserTracks = ({ tracksByTerm, profile, initialFavorites }: UserTracksProps
 
     setFavorite(!wasFavorite);
 
-    const result = wasFavorite ? await removeFavoriteAction(id) : await addFavoriteAction(track);
-    if (!result.ok) {
-      console.error('failed to update favorite:', result.error);
-      setFavorite(wasFavorite);
+    let result: { ok: boolean; error?: string };
+    try {
+      result = wasFavorite ? await removeFavoriteAction(id) : await addFavoriteAction(track);
+    } catch (err) {
+      result = { ok: false, error: `network error: ${String(err)}` };
+    }
+
+    if (result.ok) return;
+
+    console.error('failed to update favorite:', result.error);
+    setFavorite(wasFavorite);
+
+    if (result.error === 'favorites limit reached') {
+      showError(`You can have up to 300 favorites`);
+    } else {
       showError(wasFavorite ? "Couldn't remove favorite" : "Couldn't save favorite");
     }
   };

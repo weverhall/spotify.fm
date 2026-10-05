@@ -21,3 +21,8 @@ export const removeFavoriteTrack = async (userId: string, trackId: string): Prom
   await connectMongo();
   await FavoriteModel.deleteOne({ userId, trackId });
 };
+
+export const countFavoriteTracks = async (userId: string): Promise<number> => {
+  await connectMongo();
+  return FavoriteModel.countDocuments({ userId });
+};

@@ -41,4 +41,5 @@
 | 2.10.  | 5    | moved user top tracks fetching server-side and extended it to all three time ranges instead of just medium term, adjusted schema and jsx so that album covers are shown |
 | 3.10.  | 4    | started fetching user profiles, moved session handling fully server-side, combined multiple trending tracks chart snapshot queries into one to reduce mongodb round trips |
 | 4.10.  | 6    | implemented server-side reads and server action writes for user favorite tracks |
-| total  | 167  |  |
+| 5.10.  | 6    | added security headers and csp, protected favorites against misuse with rate limiting and payload caps |
+| total  | 173  |  |

@@ -24,32 +24,32 @@ export const LastfmChartSchema = z.object({
 
 export const LastfmChartMovementSchema = z.union([z.number(), z.literal('new')]);
 
+export const SpotifyIdSchema = z.string().length(22);
+
 const SpotifyArtistSchema = z.object({
-  id: z.string().nullable(),
-  name: z.string(),
-  href: z.string().optional(),
+  id: SpotifyIdSchema.nullable(),
+  name: z.string().max(400),
+  href: z.url().max(200).nullish(),
 });
 
 const SpotifyImageSchema = z.object({
-  url: z.url(),
+  url: z.url().max(1000),
   width: z.number().nullable(),
   height: z.number().nullable(),
 });
 
 const SpotifyAlbumSchema = z.object({
-  name: z.string(),
-  images: z.array(SpotifyImageSchema),
-  external_urls: z.object({ spotify: z.url() }),
+  name: z.string().max(1000),
+  images: z.array(SpotifyImageSchema).max(20),
+  external_urls: z.object({ spotify: z.url().max(200) }),
 });
 
-export const SpotifyTrackIdSchema = z.string().length(22);
-
 export const SpotifyTrackSchema = z.object({
-  id: SpotifyTrackIdSchema.nullable(),
-  name: z.string(),
-  artists: z.array(SpotifyArtistSchema),
+  id: SpotifyIdSchema.nullable(),
+  name: z.string().max(1000),
+  artists: z.array(SpotifyArtistSchema).max(40),
   album: SpotifyAlbumSchema,
-  href: z.string().optional(),
+  href: z.url().max(200).nullish(),
 });
 
 export const SpotifyUserTracksSchema = z.object({
@@ -63,7 +63,7 @@ export const SpotifyUserTracksSchema = z.object({
 
 export const SpotifyFavoriteSchema = z.object({
   userId: z.string(),
-  trackId: SpotifyTrackIdSchema,
+  trackId: SpotifyIdSchema,
   track: SpotifyTrackSchema,
 });
 
@@ -114,7 +114,7 @@ export type LastfmTrack = z.infer<typeof LastfmTrackSchema>;
 export type LastfmTracks = z.infer<typeof LastfmTracksSchema>;
 export type LastfmChart = z.infer<typeof LastfmChartSchema>;
 export type LastfmChartMovement = z.infer<typeof LastfmChartMovementSchema>;
-export type SpotifyTrackId = z.infer<typeof SpotifyTrackIdSchema>;
+export type SpotifyId = z.infer<typeof SpotifyIdSchema>;
 export type SpotifyTrack = z.infer<typeof SpotifyTrackSchema>;
 export type SpotifyAlbumCover = z.infer<typeof SpotifyImageSchema>;
 export type SpotifyProfilePicture = z.infer<typeof SpotifyImageSchema>;

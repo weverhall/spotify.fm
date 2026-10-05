@@ -17,7 +17,7 @@ export const createSpotifyAlbumMock = (
 export const createSpotifyTrackMock = (overrides: Partial<SpotifyTrack> = {}): SpotifyTrack => ({
   id: 'Qd6lWsQYtNgDtXIsM2c59t',
   name: 'Track 1',
-  artists: [{ id: '1', name: 'Artist' }],
+  artists: [{ id: '2eY1AP2cw2Bk7l0a794bV3', name: 'Artist' }],
   album: createSpotifyAlbumMock(),
   ...overrides,
 });

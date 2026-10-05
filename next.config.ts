@@ -3,16 +3,16 @@
 
 import type { NextConfig } from 'next';
 
-const isDev = process.env.NODE_ENV !== 'production';
+const spotifyHosts = 'https://open.spotify.com https://*.spotifycdn.com';
 
 const contentSecurityPolicy = [
-  "default-src 'self'",
-  `script-src 'self' 'unsafe-inline' https://open.spotify.com${isDev ? " 'unsafe-eval'" : ''}`,
+  `default-src 'self' ${spotifyHosts}`,
+  `script-src 'self' 'unsafe-inline' 'unsafe-eval' ${spotifyHosts}`,
   "style-src 'self' 'unsafe-inline'",
   "img-src 'self' data: https:",
   "font-src 'self' data:",
   "connect-src 'self'",
-  'frame-src https://open.spotify.com',
+  `frame-src ${spotifyHosts}`,
   "frame-ancestors 'none'",
   "base-uri 'self'",
   "form-action 'self'",
