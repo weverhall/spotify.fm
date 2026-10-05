@@ -10,6 +10,7 @@ import { MultiSelect } from 'primereact/multiselect';
 import Image from 'next/image';
 import type { LastfmTrack, LastfmTracks, LastfmChartMovement } from '../lib/types/schemas';
 import { withRank, type Ranked } from '../lib/utils/rank';
+import styles from '../styles/home.module.css';
 
 type RankedTrack = Ranked<LastfmTrack>;
 
@@ -98,6 +99,7 @@ const TrendingTracks = ({ tracks, movement }: TrendingTracksProps) => {
           maxSelectedLabels={1}
           selectedItemsLabel="{0} artists"
           style={{ width: '220px' }}
+          panelClassName={styles.artistPanel}
         />
 
         <IconField iconPosition="left">

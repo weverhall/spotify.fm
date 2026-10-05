@@ -44,6 +44,10 @@
   transition: transform 0.15s;
 }
 
+.spotifyCard:hover .spotifyArrow {
+  transform: translateX(2px);
+}
+
 .main :global(.p-datatable) {
   border-radius: 12px;
   overflow: clip;
@@ -69,6 +73,10 @@
   text-decoration: underline;
 }
 
+.main :global(.p-datatable a:visited) {
+  color: #7a6aa8;
+}
+
 .main :global(.p-sortable-column-icon) {
   width: 0.85rem;
   height: 0.85rem;
@@ -79,11 +87,34 @@
   background: #fff;
 }
 
-.main :global(.p-datatable a:visited) {
-  color: #7a6aa8;
+.main :global(.p-inputtext:enabled:hover) {
+  border-color: #c9bde8;
 }
 
 .main :global(.p-inputtext:enabled:focus) {
-  border-color: #a99bd6;
-  box-shadow: 0 0 0 0.15rem #ebe6f7;
+  border-color: #a899da;
+  box-shadow: 0 0 0 0.15rem #bbaee2;
+}
+
+.main :global(.p-multiselect:not(.p-disabled):hover) {
+  border-color: #c9bde8;
+}
+
+.main :global(.p-multiselect:not(.p-disabled).p-focus) {
+  border-color: #a899da;
+  box-shadow: 0 0 0 0.15rem #bbaee2;
+}
+
+.main :global(.p-multiselect.p-focus:has([aria-expanded='true'])) {
+  border-color: #d1d5db;
+  box-shadow: none;
+}
+
+.artistPanel :global(.p-inputtext:enabled:hover) {
+  border-color: #c9bde8;
+}
+
+.artistPanel :global(.p-inputtext:enabled:focus) {
+  border-color: #a899da;
+  box-shadow: 0 0 0 0.15rem #bbaee2;
 }
