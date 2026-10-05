@@ -41,11 +41,6 @@
   margin-right: 0.7rem;
   color: #f8fcf9;
   font-size: 1.3rem;
-  transition: transform 0.15s;
-}
-
-.spotifyCard:hover .spotifyArrow {
-  transform: translateX(2px);
 }
 
 .main :global(.p-datatable) {
