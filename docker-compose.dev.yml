@@ -24,7 +24,9 @@ services:
       - redis_data:/data
 
   mongo:
-    image: mongo:8
+    # Downgraded from MongoDB 8.x as it doesn't start on Linux kernels 6.19 - 7.0.13
+    # 7.0 works on all kernels: https://jira.mongodb.org/browse/SERVER-125742
+    image: mongo:7
     ports:
       - "27017:27017"
     volumes:
