@@ -1,4 +1,4 @@
-name: CI Pipeline
+name: CI/CD Pipeline
 
 on:
   push:
@@ -56,3 +56,17 @@ jobs:
         name: playwright-report
         path: playwright-report/
         retention-days: 7
+
+  deploy:
+    needs: verify-build
+    if: github.event_name == 'push'
+    environment:
+      name: Render
+      url: https://spotify-fm-next.onrender.com
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - name: Deploy on Render via curl
+        env:
+          RENDER_DEPLOY_HOOK: ${{ secrets.RENDER_DEPLOY_HOOK }}
+        run: curl -fsS --max-time 30 -X POST -d '' "$RENDER_DEPLOY_HOOK"

@@ -1,8 +1,12 @@
 name: Scheduled Security Scanning
 
 on:
+  push:
+    branches: [ main ]
+    paths-ignore: [ '**.md', '**.css' ]
   pull_request:
     branches: [ main ]
+    paths-ignore: [ '**.md', '**.css' ]
   schedule:
     - cron: "25 4 6 * *"
   workflow_dispatch:
@@ -14,7 +18,7 @@ jobs:
   npm-audit:
     name: npm audit
     runs-on: ubuntu-24.04
-    timeout-minutes: 15
+    timeout-minutes: 10
     steps:
       - uses: actions/checkout@v7
         with:
@@ -32,7 +36,7 @@ jobs:
   trivy:
     name: Trivy
     runs-on: ubuntu-24.04
-    timeout-minutes: 15
+    timeout-minutes: 10
     steps:
       - uses: actions/checkout@v7
         with:
@@ -62,7 +66,7 @@ jobs:
   codeql:
     name: CodeQL
     runs-on: ubuntu-24.04
-    timeout-minutes: 30
+    timeout-minutes: 20
     permissions:
       actions: read
       contents: read

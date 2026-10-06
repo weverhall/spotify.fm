@@ -42,4 +42,5 @@
 | 3.10.  | 4    | started fetching user profiles, moved session handling fully server-side, combined multiple trending tracks chart snapshot queries into one to reduce mongodb round trips |
 | 4.10.  | 6    | implemented server-side reads and server action writes for user favorite tracks |
 | 5.10.  | 6    | added security headers and csp, protected favorites against misuse with rate limiting and payload caps |
-| total  | 173  |  |
+| 6.10.  | 8    | created render deploy job that runs if tests succeed, added security scan workflow with codeql and trivy, downgraded mongodb for dev container to solve kernel compatibility issues, also added favicon and fixed several small ui problems |
+| total  | 181  |  |
