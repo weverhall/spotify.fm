@@ -82,7 +82,6 @@ export const SpotifySessionSchema = SpotifyTokenSchema.extend({
 export const SpotifyProfileSchema = z.object({
   id: z.string(),
   display_name: z.string().nullish(),
-  email: z.string().optional(),
   images: z.array(SpotifyImageSchema).default([]),
   external_urls: z.object({ spotify: z.url() }).optional(),
 });
