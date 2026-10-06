@@ -4,7 +4,11 @@ ENV NEXT_TELEMETRY_DISABLED=1
 
 WORKDIR /app
 
-COPY package*.json ./
+RUN chown node:node /app
+
+USER node
+
+COPY --chown=node:node package*.json ./
 
 RUN npm install
 
