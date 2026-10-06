@@ -54,6 +54,7 @@ jobs:
         with:
           image-ref: node:24-alpine
           version: v0.75.0
+          vuln-type: os
           severity: HIGH,CRITICAL
           ignore-unfixed: true
           exit-code: "1"
