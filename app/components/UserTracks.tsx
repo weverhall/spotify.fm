@@ -3,7 +3,6 @@
 import { useRef, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { DataScroller } from 'primereact/datascroller';
 import { TabView, TabPanel } from 'primereact/tabview';
 import { SelectButton } from 'primereact/selectbutton';
 import { Button } from 'primereact/button';
@@ -16,7 +15,6 @@ import type {
   SpotifyProfilePicture,
   TracksByTerm,
 } from '../lib/types/schemas';
-import type { Ranked } from '../lib/utils/rank';
 import { useSpotifyEmbed } from '../lib/hooks/useSpotifyEmbed';
 import { addFavoriteAction, removeFavoriteAction } from '../lib/actions/favorites';
 import { PlayIcon, PauseIcon, ArrowUturnLeftIcon } from './ui/Icons';
@@ -159,7 +157,7 @@ const UserTracks = ({ tracksByTerm, profile, initialFavorites }: UserTracksProps
     setFavorite(wasFavorite);
 
     if (result.error === 'favorites limit reached') {
-      showError(`You can have up to 300 favorites`);
+      showError('You can have up to 300 favorites');
     } else {
       showError(wasFavorite ? "Couldn't remove favorite" : "Couldn't save favorite");
     }
@@ -268,12 +266,11 @@ const UserTracks = ({ tracksByTerm, profile, initialFavorites }: UserTracksProps
                 Try a longer time range.
               </p>
             ) : (
-              <DataScroller
-                value={tracks}
-                itemTemplate={(track: Ranked<SpotifyTrack>) => row(track, track.rank)}
-                rows={20}
-                emptyMessage=" "
-              />
+              <ul className={styles.list}>
+                {tracks.map((track) => (
+                  <li key={track.id ?? track.rank}>{row(track, track.rank)}</li>
+                ))}
+              </ul>
             )}
           </TabPanel>
           <TabPanel
@@ -290,12 +287,11 @@ const UserTracks = ({ tracksByTerm, profile, initialFavorites }: UserTracksProps
                 <p>Tap ♥ on a track to add it.</p>
               </div>
             ) : (
-              <DataScroller
-                value={favorites}
-                itemTemplate={(track: SpotifyTrack) => row(track)}
-                rows={20}
-                emptyMessage=" "
-              />
+              <ul className={styles.list}>
+                {favorites.map((track) => (
+                  <li key={track.id ?? track.name}>{row(track)}</li>
+                ))}
+              </ul>
             )}
           </TabPanel>
         </TabView>
