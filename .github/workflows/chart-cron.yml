@@ -1,25 +1,16 @@
-name: Scheduled Trending Tracks Refresh
+name: Scheduled Trending Chart Refresh
 
 on:
   schedule:
     - cron: '45 3,9,15,21 * * *'
   workflow_dispatch:
 
-jobs:
-  cold-start:
-    timeout-minutes: 10
-    runs-on: ubuntu-24.04
-    steps:
-    - name: Wake up service and verify availability via cURL
-      uses: jtalk/url-health-check-action@v5
-      with:
-        url: ${{ secrets.BASE_URL }}
-        max-attempts: 10
-        retry-delay: 20s
+permissions:
+  contents: read
 
+jobs:
   update-chart:
-    needs: cold-start
-    timeout-minutes: 5
+    timeout-minutes: 15
     runs-on: ubuntu-24.04
     env:
       BASE_URL: ${{ secrets.BASE_URL }}
@@ -32,6 +23,9 @@ jobs:
       REVALIDATION_SECRET: ${{ secrets.REVALIDATION_SECRET }}
     steps:
     - uses: actions/checkout@v7
+      with:
+        persist-credentials: false
+
     - uses: actions/setup-node@v7
       with:
         node-version: 24
@@ -42,6 +36,13 @@ jobs:
 
     - name: Call Last.fm API and store trending tracks in MongoDB
       run: npx tsx app/lib/scripts/storeTracks.ts
+
+    - name: Wake up service and verify availability
+      uses: jtalk/url-health-check-action@v5
+      with:
+        url: ${{ secrets.BASE_URL }}
+        max-attempts: 10
+        retry-delay: 20s
 
     - name: Revalidate homepage ISR cache
       run: npx tsx app/lib/scripts/revalidateHome.ts
