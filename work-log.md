@@ -43,4 +43,5 @@
 | 4.10.  | 6    | implemented server-side reads and server action writes for user favorite tracks |
 | 5.10.  | 6    | added security headers and csp, protected favorites against misuse with rate limiting and payload caps |
 | 6.10.  | 8    | created render deploy job that runs if tests succeed, added security scan workflow with codeql and trivy, downgraded mongodb for dev container to solve kernel compatibility issues, also added favicon and fixed several small ui problems |
-| total  | 181  |  |
+| 7.10.  | 2    | removed cron from security scan workflow and replaced trivy action version number with hash, added title and its button to homepage while improving responsiveness |
+| total  | 183  |  |
