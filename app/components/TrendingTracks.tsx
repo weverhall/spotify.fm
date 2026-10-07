@@ -49,6 +49,13 @@ const sortByNumber = (e: ColumnSortEvent, getValue: (track: RankedTrack) => numb
   return [...(e.data as RankedTrack[])].sort((a, b) => (getValue(a) - getValue(b)) * order);
 };
 
+const playcountHeader = (
+  <>
+    <span className={styles.longLabel}>All-time playcount (in thousands)</span>
+    <span className={styles.shortLabel}>Plays (k)</span>
+  </>
+);
+
 const TrendingTracks = ({ tracks, movement }: TrendingTracksProps) => {
   const [filter, setFilter] = useState<string>('');
   const [selectedArtists, setSelectedArtists] = useState<string[]>([]);
@@ -75,21 +82,23 @@ const TrendingTracks = ({ tracks, movement }: TrendingTracksProps) => {
       : rankedTracks.filter((track) => selectedArtists.includes(track.artist.name));
 
   const header = (
-    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-      <div style={{ display: 'flex', alignItems: 'center', gap: 'calc(1rem - 1px)' }}>
+    <div className={styles.tableHeader}>
+      <div className={styles.tableTitle}>
         <Image src="/last-fm-round-color-icon.svg" alt="" width={44} height={44} />
         <div>
-          <h1 style={{ margin: '0 0 0.1rem 0', fontSize: '1.7rem' }}>Global Trending Tracks</h1>
-          <div style={{ fontWeight: 'lighter', fontSize: '1.05rem', marginLeft: '2px' }}>
+          <h2 className={styles.tableHeading}>Global Trending Tracks</h2>
+          <div className={styles.tableSubheading}>
             Daily rank determined by Last.fm&apos;s trend algorithm.
           </div>
         </div>
       </div>
 
-      <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+      <div className={styles.tableControls}>
         <MultiSelect
           id="artist-filter"
           inputId="artist-filter-input"
+          className={styles.artistFilter}
+          panelClassName={styles.artistPanel}
           value={selectedArtists}
           onChange={(e) => setSelectedArtists(e.value as string[])}
           options={artistOptions}
@@ -98,17 +107,14 @@ const TrendingTracks = ({ tracks, movement }: TrendingTracksProps) => {
           showSelectAll={false}
           maxSelectedLabels={1}
           selectedItemsLabel="{0} artists"
-          style={{ width: '220px' }}
-          panelClassName={styles.artistPanel}
         />
 
-        <IconField iconPosition="left">
+        <IconField iconPosition="left" className={styles.searchField}>
           <InputIcon className="pi pi-search" style={{ fontSize: '1.1rem' }} />
           <InputText
             value={filter}
             onChange={(e) => setFilter(e.target.value)}
             placeholder="Search..."
-            style={{ width: '280px' }}
           />
         </IconField>
       </div>
@@ -165,7 +171,7 @@ const TrendingTracks = ({ tracks, movement }: TrendingTracksProps) => {
 
       <Column
         field="playcount"
-        header="All-time playcount (in thousands)"
+        header={playcountHeader}
         sortable
         sortFunction={(e) => sortByNumber(e, (track) => Number(track.playcount))}
         body={(track: RankedTrack) => formatPlaycount(track.playcount)}

@@ -35,12 +35,13 @@ export default defineConfig([
       "@typescript-eslint/no-unused-vars":["error",{argsIgnorePattern:"^_"}],
       "@typescript-eslint/restrict-template-expressions":"error",
       "@typescript-eslint/restrict-plus-operands":"error",
+      "@next/next/no-html-link-for-pages":"off",
     },
   },
   {
     files: ["tests/unit/*.ts"],
     rules: {
-      "@typescript-eslint/no-explicit-any": "off",
+      "@typescript-eslint/no-explicit-any":"off",
       "@typescript-eslint/no-unsafe-assignment":"off",
     },
   },

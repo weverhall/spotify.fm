@@ -8,25 +8,35 @@
 
 .spotifyCard {
   display: flex;
-  align-items: center;
-  gap: 1rem;
+  align-items: stretch;
   margin-bottom: 1.5rem;
-  padding: 1rem 1.5rem;
   border-radius: 12px;
   background: #121212;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
-  text-decoration: none;
-  transition: background 0.15s, box-shadow 0.15s;
+  overflow: clip;
 }
 
-.spotifyCard:hover {
-  background: #1a1a1a;
-  box-shadow: 0 5px 22px rgba(0, 0, 0, 0.1);
+.loginLink {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem 1.5rem;
+  text-decoration: none;
+  transition: background 0.15s;
+}
+
+.loginLink:hover {
+  background: #1c1c1c;
+}
+
+.loginLink:focus-visible {
+  outline: 2px solid #1db954;
+  outline-offset: -3px;
 }
 
 .spotifyText {
   display: flex;
-  flex: 1;
   flex-direction: column;
   gap: 0.15rem;
   color: #b3b3b3;
@@ -37,10 +47,87 @@
   font-size: 1.05rem;
 }
 
-.spotifyArrow {
-  margin-right: 0.7rem;
+.cardTitle {
+  display: flex;
+  flex-shrink: 0;
+  margin: 0;
+}
+
+.homeLink {
+  position: relative;
+  display: flex;
+  align-items: center;
+  padding: 1rem calc(1.5rem + 9px) 1rem 2.25rem;
   color: #f8fcf9;
-  font-size: 1.3rem;
+  font-family: var(--font-unbounded), system-ui, sans-serif;
+  font-size: 1.85rem;
+  font-weight: 300;
+  text-decoration: none;
+  transition: background 0.15s;
+}
+
+.homeLink::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 1px;
+  height: 2.4rem;
+  background: rgba(255, 255, 255, 0.15);
+  transform: translateY(-50%);
+}
+
+.homeLink:hover {
+  background: #1c1c1c;
+}
+
+.homeLink:focus-visible {
+  outline: 2px solid #a899da;
+  outline-offset: -3px;
+}
+
+.tableHeader {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.tableTitle {
+  display: flex;
+  align-items: center;
+  gap: calc(1rem - 1px);
+}
+
+.tableHeading {
+  margin: 0 0 0.1rem;
+  font-size: 1.7rem;
+}
+
+.tableSubheading {
+  margin-left: 2px;
+  font-size: 1.05rem;
+  font-weight: lighter;
+}
+
+.tableControls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.artistFilter {
+  width: 220px;
+}
+
+.searchField :global(.p-inputtext) {
+  width: 280px;
+}
+
+.shortLabel {
+  display: none;
 }
 
 .main :global(.p-datatable) {
@@ -57,6 +144,7 @@
 
 .main :global(.p-datatable .p-datatable-tbody > tr > td) {
   color: #1f1d2b;
+  overflow-wrap: anywhere;
 }
 
 .main :global(.p-datatable a) {
@@ -112,4 +200,42 @@
 .artistPanel :global(.p-inputtext:enabled:focus) {
   border-color: #a899da;
   box-shadow: 0 0 0 0.15rem #bbaee2;
+}
+
+@media (max-width: 600px) {
+  .cardTitle,
+  .tableSubheading,
+  .longLabel {
+    display: none;
+  }
+
+  .shortLabel {
+    display: inline;
+  }
+
+  .tableHeader {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .tableControls,
+  .artistFilter,
+  .searchField,
+  .searchField :global(.p-inputtext) {
+    width: 100%;
+  }
+
+  .main {
+    padding: 1.5rem 0.75rem;
+  }
+
+  .main :global(.p-datatable .p-datatable-thead > tr > th),
+  .main :global(.p-datatable .p-datatable-tbody > tr > td) {
+    padding: 0.4rem 0.45rem;
+    font-size: 0.85rem;
+  }
+
+  .main :global(.p-datatable-header) {
+    padding: 0.75rem;
+  }
 }
