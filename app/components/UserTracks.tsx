@@ -140,7 +140,7 @@ const UserTracks = ({ tracksByTerm, profile, initialFavorites, demo = false }: U
           </p>
         </>
       ),
-      life: 10000,
+      life: 20000,
     });
   }, [demo]);
 
@@ -267,12 +267,7 @@ const UserTracks = ({ tracksByTerm, profile, initialFavorites, demo = false }: U
 
   return (
     <>
-      <Toast
-        ref={toastRef}
-        position="top-center"
-        className={styles.toast}
-        style={{ width: 'min(720px, calc(100vw - 2rem))' }}
-      />
+      <Toast ref={toastRef} position="top-center" className={styles.toast} />
       <div className={styles.view}>
         <Header profile={profile} />
         <TabView>
