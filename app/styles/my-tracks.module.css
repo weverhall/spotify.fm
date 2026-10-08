@@ -413,10 +413,6 @@
   box-shadow: 0 0 0 2px #fff;
 }
 
-.toast:global(.p-toast) {
-  width: min(720px, calc(100vw - 2rem));
-}
-
 .toast :global(.p-toast-detail p) {
   margin: 0;
 }

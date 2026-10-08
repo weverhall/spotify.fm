@@ -267,7 +267,12 @@ const UserTracks = ({ tracksByTerm, profile, initialFavorites, demo = false }: U
 
   return (
     <>
-      <Toast ref={toastRef} position="top-center" className={styles.toast} />
+      <Toast
+        ref={toastRef}
+        position="top-center"
+        className={styles.toast}
+        style={{ width: 'min(720px, calc(100vw - 2rem))' }}
+      />
       <div className={styles.view}>
         <Header profile={profile} />
         <TabView>
