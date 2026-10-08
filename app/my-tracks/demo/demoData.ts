@@ -18,7 +18,7 @@ export const demoTracksByTerm: TracksByTerm = {
 export const demoProfile: SpotifyProfile = {
   id: 'demo',
   display_name: 'Demo User',
-  images: [{ url: '/demo-avatar.png', width: 225, height: 225 }],
+  images: [{ url: '/demo-avatar.jpg', width: 225, height: 225 }],
 };
 
 export const demoFavorites = demoTracksByTerm.short_term.slice(0, 3);

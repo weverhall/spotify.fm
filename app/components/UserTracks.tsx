@@ -132,12 +132,12 @@ const UserTracks = ({ tracksByTerm, profile, initialFavorites, demo = false }: U
       summary: 'Demo mode',
       detail: (
         <>
-          You&apos;re viewing sample data, and favorites aren&apos;t saved.
-          <br />
-          Spotify login is limited to invited accounts for apps in development mode.
-          <br />
-          To request access, <a href="mailto:weverhall@gmail.com">send me an email</a> with your
-          Spotify account email.
+          <p>You&apos;re viewing sample data, and favorites aren&apos;t saved.</p>
+          <p>Spotify login is limited to invited accounts for apps in development mode.</p>
+          <p>
+            To request access, <a href="mailto:weverhall@gmail.com">send me an email</a> with your
+            Spotify account email.
+          </p>
         </>
       ),
       life: 10000,
@@ -267,7 +267,7 @@ const UserTracks = ({ tracksByTerm, profile, initialFavorites, demo = false }: U
 
   return (
     <>
-      <Toast ref={toastRef} position="top-center" />
+      <Toast ref={toastRef} position="top-center" className={styles.toast} />
       <div className={styles.view}>
         <Header profile={profile} />
         <TabView>
