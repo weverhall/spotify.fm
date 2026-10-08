@@ -44,5 +44,5 @@
 | 5.10.  | 6    | added security headers and csp, protected favorites against misuse with rate limiting and payload caps |
 | 6.10.  | 8    | created render deploy job that runs if tests succeed, added security scan workflow with codeql and trivy, downgraded mongodb for dev container to solve kernel compatibility issues, also added favicon and fixed several small ui problems |
 | 7.10.  | 2    | removed cron from security scan workflow and replaced trivy action version number with hash, added title and its button to homepage while improving responsiveness |
-| 8.10.  | 3    | improved unit, integration, and e2e tests |
-| total  | 186  |  |
+| 8.10.  | 7    | created a demo page to allow users to see my tracks page without having an invited Spotify account, also updated unit, integration, and e2e tests |
+| total  | 190  |  |

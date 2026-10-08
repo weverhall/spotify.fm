@@ -1,6 +1,6 @@
 'use client';
 
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { TabView, TabPanel } from 'primereact/tabview';
@@ -25,6 +25,7 @@ type UserTracksProps = {
   tracksByTerm: TracksByTerm;
   profile: SpotifyProfile | null;
   initialFavorites: SpotifyTrack[];
+  demo?: boolean;
 };
 
 type TermOption = { label: string; value: SpotifyTerm };
@@ -113,13 +114,35 @@ const Header = ({ profile }: { profile: SpotifyProfile | null }) => {
   );
 };
 
-const UserTracks = ({ tracksByTerm, profile, initialFavorites }: UserTracksProps) => {
+const UserTracks = ({ tracksByTerm, profile, initialFavorites, demo = false }: UserTracksProps) => {
   const [term, setTerm] = useState<SpotifyTerm>('medium_term');
   const [favorites, setFavorites] = useState<SpotifyTrack[]>(initialFavorites);
   const toastRef = useRef<Toast>(null);
+  const demoNoticeShownRef = useRef(false);
   const { hostRef, play, isPlaying } = useSpotifyEmbed(tracksByTerm.medium_term[0]?.id ?? null);
 
   const tracks = tracksByTerm[term];
+
+  useEffect(() => {
+    if (!demo || demoNoticeShownRef.current) return;
+    demoNoticeShownRef.current = true;
+
+    toastRef.current?.show({
+      severity: 'info',
+      summary: 'Demo mode',
+      detail: (
+        <>
+          You&apos;re viewing sample data, and favorites aren&apos;t saved.
+          <br />
+          Spotify login is limited to invited accounts for apps in development mode.
+          <br />
+          To request access, <a href="mailto:weverhall@gmail.com">send me an email</a> with your
+          Spotify account email.
+        </>
+      ),
+      life: 10000,
+    });
+  }, [demo]);
 
   const isFavorite = (id: string) => favorites.some((f) => f.id === id);
 
@@ -143,6 +166,7 @@ const UserTracks = ({ tracksByTerm, profile, initialFavorites }: UserTracksProps
       });
 
     setFavorite(!wasFavorite);
+    if (demo) return;
 
     let result: { ok: boolean; error?: string };
     try {
