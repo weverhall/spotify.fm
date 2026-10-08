@@ -47,6 +47,26 @@
   font-size: 1.05rem;
 }
 
+.demoLink {
+  position: relative;
+  display: flex;
+  flex: 1;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem 2rem 1rem 1.5rem;
+  text-decoration: none;
+  transition: background 0.15s;
+}
+
+.demoLink:hover {
+  background: #1c1c1c;
+}
+
+.demoLink:focus-visible {
+  outline: 2px solid #f8fcf9;
+  outline-offset: -3px;
+}
+
 .cardTitle {
   display: flex;
   flex-shrink: 0;
@@ -58,7 +78,7 @@
   display: flex;
   align-items: center;
   padding: 1rem calc(1.5rem + 9px) 1rem 2.25rem;
-  color: #f8fcf9;
+  color: #f9fbfa;
   font-family: var(--font-unbounded), system-ui, sans-serif;
   font-size: 1.85rem;
   font-weight: 300;
@@ -66,6 +86,7 @@
   transition: background 0.15s;
 }
 
+.demoLink::before,
 .homeLink::before {
   content: '';
   position: absolute;
@@ -202,15 +223,26 @@
   box-shadow: 0 0 0 0.15rem #bbaee2;
 }
 
-@media (max-width: 600px) {
+@media (max-width: 825px) {
   .cardTitle,
-  .tableSubheading,
+  .loginSubtitle,
+  .demoSubtitle,
   .longLabel {
     display: none;
   }
 
   .shortLabel {
     display: inline;
+  }
+
+  .demoLink {
+    padding: 1rem 1.25rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .tableSubheading {
+    display: none;
   }
 
   .tableHeader {
