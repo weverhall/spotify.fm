@@ -107,6 +107,7 @@ const TrendingTracks = ({ tracks, movement }: TrendingTracksProps) => {
           showSelectAll={false}
           maxSelectedLabels={1}
           selectedItemsLabel="{0} artists"
+          aria-label="Filter by artist"
         />
 
         <IconField iconPosition="left" className={styles.searchField}>
@@ -115,6 +116,7 @@ const TrendingTracks = ({ tracks, movement }: TrendingTracksProps) => {
             value={filter}
             onChange={(e) => setFilter(e.target.value)}
             placeholder="Search..."
+            aria-label="Search tracks"
           />
         </IconField>
       </div>
