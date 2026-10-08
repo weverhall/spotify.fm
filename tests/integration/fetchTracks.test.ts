@@ -1,23 +1,31 @@
 import { describe, it, expect } from 'vitest';
-import { getUserTracks, getTrendingTracks } from '../../app/lib/services/fetchTracks';
+import { http, HttpResponse } from 'msw';
+import { getUserTracksByTerm, getTrendingTracks } from '../../app/lib/services/fetchTracks';
+import { server } from './mocks/server';
+import { createSpotifyUserTracksMock } from '../factories/tracks';
 import lastfmTopTracks from '../fixtures/trendingTracks.json';
 
-describe('getUserTracks (integration/msw)', () => {
-  it('returns mocked user track', async () => {
-    const data = await getUserTracks('testToken', 'medium_term');
+describe('getUserTracksByTerm (integration/msw)', () => {
+  it('returns ranked tracks for every time range', async () => {
+    const requestedTerms: string[] = [];
 
-    expect(Array.isArray(data.items)).toBe(true);
-    expect(data.items).toHaveLength(1);
+    server.use(
+      http.get('https://api.spotify.com/v1/me/top/tracks', ({ request }) => {
+        requestedTerms.push(new URL(request.url).searchParams.get('time_range') ?? '');
+        return HttpResponse.json(createSpotifyUserTracksMock());
+      })
+    );
 
-    const track = data.items[0];
-    expect(track).toHaveProperty('id');
-    expect(Array.isArray(track.artists)).toBe(true);
-    expect(track.artists[0].name).toBe('Artist');
+    const data = await getUserTracksByTerm('testToken');
+    expect(requestedTerms.sort()).toEqual(['long_term', 'medium_term', 'short_term']);
+    expect(Object.keys(data).sort()).toEqual(['long_term', 'medium_term', 'short_term']);
+    expect(data.medium_term).toHaveLength(1);
+    expect(data.medium_term[0]).toMatchObject({ rank: 1, artists: [{ name: 'Artist' }] });
   });
 });
 
 describe('getTrendingTracks (integration/msw)', () => {
-  it('keeps track order and strips unused fields', async () => {
+  it('returns used fields only and keeps track order', async () => {
     const raw = lastfmTopTracks.tracks.track;
     const data = await getTrendingTracks();
 
