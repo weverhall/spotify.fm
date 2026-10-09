@@ -2,7 +2,6 @@
 
 import { useEffect, useRef } from 'react';
 import { Toast } from 'primereact/toast';
-import styles from '../styles/home.module.css';
 
 const LoginToast = () => {
   const toastRef = useRef<Toast>(null);
@@ -29,7 +28,7 @@ const LoginToast = () => {
     window.history.replaceState(null, '', '/');
   }, []);
 
-  return <Toast ref={toastRef} position="top-center" className={styles.toast} />;
+  return <Toast ref={toastRef} position="top-center" className="toast" />;
 };
 
 export default LoginToast;
