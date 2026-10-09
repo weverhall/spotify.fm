@@ -20,7 +20,14 @@ export const GET = async (req: Request) => {
 
   try {
     const token = await getSpotifyToken(code);
-    const profile = await getUserProfile(token.access_token);
+
+    let profile;
+    try {
+      profile = await getUserProfile(token.access_token);
+    } catch (err) {
+      console.error('spotify profile request failed, account probably not invited yet:', err);
+      return NextResponse.redirect(`${env.BASE_URL}/?login=not-invited-yet`);
+    }
 
     const sessionID = generateSessionID();
     await storeSession(sessionID, { ...token, userId: profile.id });

@@ -3,6 +3,7 @@ export const revalidate = 86400;
 import Image from 'next/image';
 import Link from 'next/link';
 import TrendingTracks from './components/TrendingTracks';
+import LoginToast from './components/LoginToast';
 import { getTrendingChart } from './lib/services/fetchTracks';
 import styles from './styles/home.module.css';
 
@@ -11,6 +12,8 @@ const HomePage = async () => {
 
   return (
     <main className={styles.main}>
+      <LoginToast />
+
       <div className={styles.spotifyCard}>
         <a href="/api/auth/login" className={styles.loginLink}>
           <Image src="/Primary_Logo_Green_RGB.svg" alt="" width={42} height={42} />
