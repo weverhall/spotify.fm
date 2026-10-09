@@ -45,4 +45,5 @@
 | 6.10.  | 8    | created render deploy job that runs if tests succeed, added security scan workflow with codeql and trivy, downgraded mongodb for dev container to solve kernel compatibility issues, also added favicon and fixed several small ui problems |
 | 7.10.  | 2    | removed cron from security scan workflow and replaced trivy action version number with hash, added title and its button to homepage while improving responsiveness |
 | 8.10.  | 7    | created a demo page to allow users to see my tracks page without having an invited Spotify account, also updated unit, integration, and e2e tests |
-| total  | 190  |  |
+| 9.10.  | 3    | wrote a readme for the project and started notifying users if their login was unsuccessful due to not being invited via the api dashboard to test the app |
+| total  | 193  |  |
