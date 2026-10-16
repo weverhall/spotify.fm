@@ -2,7 +2,9 @@
 
 Daily global trending tracks from Last.fm, as well as your personal top tracks from Spotify.
 
-https://spotify-fm-next.onrender.com
+https://spotify-fm-next.onrender.com/
+
+See the [instructions](docs/instructions.md) for a full walkthrough.
 
 ### Global Trending Chart
 - Last.fm's top 50 tracks, updated daily
