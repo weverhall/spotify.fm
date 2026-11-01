@@ -17,19 +17,19 @@
   },
   "dependencies": {
     "dotenv": "^17.4.2",
-    "mongoose": "^9.10.2",
-    "next": "^16.2.7",
+    "mongoose": "^9.11.4",
+    "next": "^16.4.3",
     "primeicons": "^7.0.0",
     "primereact": "^10.9.9",
-    "react": "^19.3.0",
-    "react-dom": "^19.3.0",
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1",
     "redis": "^5.12.1",
-    "zod": "^4.6.5"
+    "zod": "^4.6.7"
   },
   "devDependencies": {
-    "@playwright/test": "^1.63.0",
+    "@playwright/test": "^1.64.1",
     "@stylistic/eslint-plugin": "^5.10.0",
-    "@types/node": "^24.19.0",
+    "@types/node": "^24.19.2",
     "@types/react": "^19.3.0",
     "@types/react-dom": "^19.3.0",
     "@typescript-eslint/eslint-plugin": "^8.48.0",
@@ -38,7 +38,7 @@
     "msw": "^2.15.0",
     "tsx": "^4.23.15",
     "typescript": "^5.9.3",
-    "vitest": "^4.1.8"
+    "vitest": "^4.1.12"
   },
   "allowScripts": {
     "esbuild@0.28.2": true,
